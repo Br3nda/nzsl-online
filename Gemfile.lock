@@ -285,7 +285,7 @@ GEM
     videojs_rails (4.12.15)
     warden (1.2.7)
       rack (>= 1.0)
-    whenever (0.9.7)
+    whenever (0.10.0)
       chronic (>= 0.6.3)
     will_paginate (3.1.6)
     xpath (2.1.0)
