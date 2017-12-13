@@ -1,8 +1,21 @@
 $(document).ready(function() {
-  var $images = $('#search-container').find("img");
-  Foundation.onImagesLoaded($images, function() {
-    $('#search-container').fadeIn("slow")
-    var equalizer = new Foundation.Equalizer($('#search-container'));
-  });
-  var homeEqualizer = new Foundation.Equalizer($('#sign-content-container'));
+    if ($("#search-container").children().length === 1) {
+    $('#search-container').fadeIn(1000);
+    } else {
+    $("#search-container").on("postequalized.zf.equalizer", function() {
+      $results = $(".link_and_drawing_container");
+      $results.each(function(){
+        console.log("found");
+        $(this).css("position", "absolute");
+        $(this).css("bottom", "0");
+      });
+      $('#search-container').fadeIn("slow");
+    });
+    $("#search-container").on("resizeme.zf.trigger mutateme.zf.trigger", function() {
+      $results = $(".link_and_drawing_container");
+      $results.each(function(){
+        $(this).css("position", "relative");
+      });
+    });
+  }
 });

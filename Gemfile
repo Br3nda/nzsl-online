@@ -2,29 +2,27 @@ source 'https://rubygems.org'
 ruby '2.3.3'
 
 gem 'rails', '~> 4.2.6'
-gem 'rails_12factor'
-# Use Postgresql as the database for Active Record
-gem 'pg'
 
+# Use Postgresql as the database for Active Record
 gem 'haml'
 gem 'jquery-rails'
 gem 'jquery-ui-rails'
 gem 'mini_magick', '~> 3.6.0'
-gem 'nokogiri'
+gem 'nokogiri', '~> 1.8.1'
+gem 'pandoc-ruby'
+gem 'pg', '~> 0.20.0'
 gem 'whenever'
 
-gem 'aws-sdk', '~> 2'
 gem 'browser'
 gem 'ckeditor_rails'
-gem 'formtastic', '~>2.3.0'
-gem 'foundation-rails'
+gem 'foundation-rails', '~> 6.3.1.0'
 gem 'i18n'
 gem 'mail'
 gem 'modernizr-rails'
 gem 'paperclip'
 gem 'responders', '~> 2.0'
 gem 'therubyracer', platforms: :ruby
-
+gem 'videojs_rails'
 # records crashes
 gem 'raygun4ruby'
 
@@ -56,7 +54,7 @@ group :development, :test do
   # for checking images in specs
   gem 'fastimage'
 
-  gem 'rubocop', '~> 0.34.0', require: false
+  gem 'rubocop', '~> 0.47.0', require: false
 
   # catches email sending, and logs instead
   gem 'letter_opener'
@@ -74,6 +72,13 @@ group :development, :test do
   gem 'faker'
 end
 
+group :test do
+  gem 'capybara'
+  gem 'capybara-screenshot'
+  gem 'codeclimate-test-reporter', '~> 1.0.0'
+end
+
 group :staging, :production do
+  gem 'rails_12factor'
   gem 'unicorn'
 end

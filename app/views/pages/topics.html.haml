@@ -1,12 +1,12 @@
 .small-11.small-centered.medium-10.large-8
   .topic-container.medium-11.medium-centered
-    = render :partial => 'pages/content'
+    = render partial: 'pages/content'
     %ol
       - SignMenu.topic_tags.each do |topic|
         %li.topic-li-style.small-12
           = link_to topic[0], search_signs_path(tag: topic[1])
     %h2
-      Linguistic Usage
+      Usage Status
     .usage-tags
       %ol
         - SignMenu.usage_tags.each do |u|

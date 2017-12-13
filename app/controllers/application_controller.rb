@@ -1,19 +1,14 @@
 # frozen_string_literal: true
 
 class ApplicationController < ActionController::Base
+  include BasicAuthHelper
+
   protect_from_forgery with: :exception
   require 'browser'
   layout :layout_by_resource
 
   before_action :check_browser_support
-
-  def check_browser_support
-    setup_browser_rules
-    return if browser.modern?
-    flash[:error] = %(Your browser is not supported. This may mean that some features of NZSL Online will
-                      not display properly. <a href="https://updatemybrowser.org/"> Would you like to
-                      upgrade your browser? </a>).html_safe
-  end
+  before_action :staging_http_auth
 
   private
 
@@ -27,8 +22,8 @@ class ApplicationController < ActionController::Base
 
   def setup_browser_rules # rubocop:disable Metrics/AbcSize
     Browser.modern_rules.clear
-    Browser.modern_rules << ->(b) { b.chrome? && b.version.to_i >= 40 }
-    Browser.modern_rules << ->(b) { b.firefox? && b.version.to_i >= 40 }
+    Browser.modern_rules << ->(b) { b.chrome? && b.version.to_i >= 55 }
+    Browser.modern_rules << ->(b) { b.firefox? && b.version.to_i >= 51 }
     Browser.modern_rules << ->(b) { b.safari? && b.version.to_i >= 9 }
     Browser.modern_rules << ->(b) { b.ie? && b.version.to_i >= 10 }
   end
@@ -57,10 +52,6 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  def load_search_query
-    # @query = session[:search][:query] if session[:search].present? && session[:search][:query].present?
-  end
-
   def set_search_query
     @query = {}
   end
@@ -76,6 +67,23 @@ class ApplicationController < ActionController::Base
       render template: "pages/#{@page.template}", status: 404
     else
       render text: '404 - page not found', status: 404
+    end
+  end
+
+  protected
+
+  def check_browser_support
+    setup_browser_rules
+    return if browser.modern?
+    flash[:error] = %(Your browser is not supported. This may mean that some features of NZSL Online will
+                      not display properly. <a href="https://updatemybrowser.org/"> Would you like to
+                      upgrade your browser? </a>).html_safe
+  end
+
+  def staging_http_auth
+    return unless staging_env?
+    authenticate_or_request_with_http_basic('Username and Password please') do |username, password|
+      username == ENV['HTTP_BASIC_AUTH_USERNAME'] && password == ENV['HTTP_BASIC_AUTH_PASSWORD']
     end
   end
 end
