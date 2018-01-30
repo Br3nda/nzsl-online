@@ -215,7 +215,7 @@ GEM
       ffi (>= 0.5.0, < 2)
     rb-readline (0.5.5)
     ref (2.0.0)
-    rerun (0.11.0)
+    rerun (0.13.0)
       listen (~> 3.0)
     responders (2.4.0)
       actionpack (>= 4.2.0, < 5.3)
