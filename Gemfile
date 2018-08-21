@@ -20,7 +20,6 @@ gem 'foundation-rails', '~> 6.3.1.0'
 gem 'i18n'
 gem 'mail'
 gem 'modernizr-rails'
-gem 'paperclip'
 gem 'responders', '~> 2.0'
 gem 'mini_racer', platforms: :ruby
 gem 'videojs_rails'
